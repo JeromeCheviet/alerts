@@ -1,0 +1,14 @@
+image: maven:3.8.4-openjdk-11-slim
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.repository/"
+
+cache:
+  key: maven
+  paths: [.repository/]
+
+test_job:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
