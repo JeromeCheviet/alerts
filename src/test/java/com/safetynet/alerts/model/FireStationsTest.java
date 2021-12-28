@@ -7,12 +7,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FireStationsTest {
 
+    private String actualAddress = "1 rue du Puit";
+    private int actualStation = 100;
+    private String actualToString = "FireStations{" +
+            "address='" + actualAddress + '\'' +
+            ", station=" + actualStation +
+            '}';
+
     @Test
     public void createAFireStation() {
-        FireStations fireStations = new FireStations(1, "1 allée du Chateau", 9);
+        FireStations fireStations = new FireStations();
 
-        assertEquals(fireStations.getId(), 1);
-        assertEquals(fireStations.getAddress(), "1 allée du Chateau");
-        assertEquals(fireStations.getStation(), 9);
+        fireStations.setAddress(actualAddress);
+        fireStations.setStation(actualStation);
+
+        assertEquals(fireStations.getAddress(), actualAddress);
+        assertEquals(fireStations.getStation(), actualStation);
+        assertEquals(fireStations.toString(), actualToString);
     }
 }
