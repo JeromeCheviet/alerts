@@ -1,36 +1,53 @@
 package com.safetynet.alerts.model;
 
-import com.safetynet.alerts.model.Person;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class PersonTest {
 
+    private String actualFirstName = "Jérôme";
+    private String actualLastName = "Cheviet";
+    private String actualAdress = "1 rue du Puit";
+    private String actualCity = "Paris";
+    private String actualZip = "75000";
+    private String actualPhone = "06.07.08.09.10";
+    private String actualEmail = "jcheviet@mail.me";
+    private String actualToString = "Person{" +
+            "firstName='" + actualFirstName + '\'' +
+            ", lastName='" + actualLastName + '\'' +
+            ", address='" + actualAdress + '\'' +
+            ", city='" + actualCity + '\'' +
+            ", zip='" + actualZip + '\'' +
+            ", phone='" + actualPhone + '\'' +
+            ", mail='" + actualEmail + '\'' +
+            '}';
+
+
+
     @Test
     public void createAPerson() {
 
-        Person person = new Person(
-                1,
-                "Jérôme",
-                "Cheviet",
-                "1980/09/02",
-                "1 allée du Chateau",
-                "Ranton",
-                86200,
-                "06.07.08.09.10",
-                "jcheviet@hotmail.com"
-        );
+        Person person = new Person();
 
-        assertEquals(person.getId(), 1);
-        assertEquals(person.getFirstName(), "Jérôme");
-        assertEquals(person.getLastName(), "Cheviet");
-        assertEquals(person.getBirthday(), "1980/09/02");
-        assertEquals(person.getAddress(), "1 allée du Chateau");
-        assertEquals(person.getCity(), "Ranton");
-        assertEquals(person.getZip(), 86200);
-        assertEquals(person.getPhone(), "06.07.08.09.10");
-        assertEquals(person.getMail(), "jcheviet@hotmail.com");
+        person.setFirstName(actualFirstName);
+        person.setLastName(actualLastName);
+        person.setAddress(actualAdress);
+        person.setCity(actualCity);
+        person.setZip(actualZip);
+        person.setPhone(actualPhone);
+        person.setEmail(actualEmail);
+
+
+        assertEquals(person.getFirstName(), actualFirstName);
+        assertEquals(person.getLastName(), actualLastName);
+        assertEquals(person.getAddress(), actualAdress);
+        assertEquals(person.getCity(), actualCity);
+        assertEquals(person.getZip(), actualZip);
+        assertEquals(person.getPhone(), actualPhone);
+        assertEquals(person.getEmail(), actualEmail);
+        assertEquals(person.toString(), actualToString);
     }
 }

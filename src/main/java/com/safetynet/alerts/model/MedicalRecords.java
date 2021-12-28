@@ -4,29 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MedicalRecords {
-    private int id;
+
+
     private String fistName;
     private String lastName;
-    private String birthday;
-    private Map<String, String> medication;
+    private String birthdate;
+    private List<String> medications;
     private List<String> allergies;
-
-    public MedicalRecords(int id, String fistName, String lastName, String birthday, Map<String, String> medication, List<String> allergies) {
-        this.id = id;
-        this.fistName = fistName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.medication = medication;
-        this.allergies = allergies;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFistName() {
         return fistName;
@@ -44,20 +28,20 @@ public class MedicalRecords {
         this.lastName = lastName;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
-    public Map<String, String> getMedication() {
-        return medication;
+    public List<String> getMedications() {
+        return medications;
     }
 
-    public void setMedication(Map<String, String> medication) {
-        this.medication = medication;
+    public void setMedications(List<String> medications) {
+        this.medications = medications;
     }
 
     public List<String> getAllergies() {
@@ -71,11 +55,10 @@ public class MedicalRecords {
     @Override
     public String toString() {
         return "MedicalRecords{" +
-                "id=" + id +
-                ", fistName='" + fistName + '\'' +
+                "fistName='" + fistName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", medication=" + medication +
+                ", birthday='" + birthdate + '\'' +
+                ", medication=" + medications +
                 ", allergies=" + allergies +
                 '}';
     }
