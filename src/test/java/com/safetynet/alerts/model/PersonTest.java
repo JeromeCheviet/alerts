@@ -1,7 +1,6 @@
 package com.safetynet.alerts.model;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +11,7 @@ public class PersonTest {
     private String actualLastName = "Cheviet";
     private String actualAdress = "1 rue du Puit";
     private String actualCity = "Paris";
-    private String actualZip = "75000";
+    private int actualZip = 75000;
     private String actualPhone = "06.07.08.09.10";
     private String actualEmail = "jcheviet@mail.me";
     private String actualToString = "Person{" +
@@ -24,7 +23,6 @@ public class PersonTest {
             ", phone='" + actualPhone + '\'' +
             ", mail='" + actualEmail + '\'' +
             '}';
-
 
 
     @Test

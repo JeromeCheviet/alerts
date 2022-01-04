@@ -1,11 +1,10 @@
 package com.safetynet.alerts.model;
 
-import com.safetynet.alerts.model.FireStations;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FireStationsTest {
+public class FireStationTest {
 
     private String actualAddress = "1 rue du Puit";
     private int actualStation = 100;
@@ -16,13 +15,13 @@ public class FireStationsTest {
 
     @Test
     public void createAFireStation() {
-        FireStations fireStations = new FireStations();
+        FireStation fireStation = new FireStation();
 
-        fireStations.setAddress(actualAddress);
-        fireStations.setStation(actualStation);
+        fireStation.setAddress(actualAddress);
+        fireStation.setStation(actualStation);
 
-        assertEquals(fireStations.getAddress(), actualAddress);
-        assertEquals(fireStations.getStation(), actualStation);
-        assertEquals(fireStations.toString(), actualToString);
+        assertEquals(fireStation.getAddress(), actualAddress);
+        assertEquals(fireStation.getStation(), actualStation);
+        assertEquals(fireStation.toString(), actualToString);
     }
 }

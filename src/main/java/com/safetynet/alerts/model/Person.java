@@ -1,12 +1,16 @@
 package com.safetynet.alerts.model;
 
+import org.springframework.stereotype.Component;
+
+//TODO JavaDoc
+@Component
 public class Person {
 
     private String firstName;
     private String lastName;
     private String address;
     private String city;
-    private String zip;
+    private int zip;
     private String phone;
     private String email;
 
@@ -42,11 +46,11 @@ public class Person {
         this.city = city;
     }
 
-    public String getZip() {
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 

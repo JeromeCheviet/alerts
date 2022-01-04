@@ -1,23 +1,25 @@
 package com.safetynet.alerts.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
-import java.util.Map;
 
-public class MedicalRecords {
+//TODO JavaDoc
+@Component
+public class MedicalRecord {
 
-
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String birthdate;
     private List<String> medications;
     private List<String> allergies;
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String fistName) {
+        this.firstName = fistName;
     }
 
     public String getLastName() {
@@ -55,7 +57,7 @@ public class MedicalRecords {
     @Override
     public String toString() {
         return "MedicalRecords{" +
-                "fistName='" + fistName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthday='" + birthdate + '\'' +
                 ", medication=" + medications +

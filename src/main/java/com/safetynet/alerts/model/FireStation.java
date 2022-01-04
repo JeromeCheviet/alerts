@@ -1,6 +1,10 @@
 package com.safetynet.alerts.model;
 
-public class FireStations {
+import org.springframework.stereotype.Component;
+
+//TODO JavaDoc
+@Component
+public class FireStation {
 
     private String address;
     private int station;

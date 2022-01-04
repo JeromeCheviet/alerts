@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MedicalRecordsTest {
+class MedicalRecordTest {
 
     private String actualFirstName = "Jérôme";
     private String actualLastName = "Cheviet";
@@ -18,7 +18,7 @@ class MedicalRecordsTest {
     @Test
     public void createAMedicalRecords() {
 
-        MedicalRecords medicalRecords = new MedicalRecords();
+        MedicalRecord medicalRecords = new MedicalRecord();
 
         actualMedications.add("aznol:350mg");
         actualMedications.add("hydrapermazol:100mg");
@@ -28,20 +28,20 @@ class MedicalRecordsTest {
         actualAllergies.add("aznol");
 
         String actualToString = "MedicalRecords{" +
-                "fistName='" + actualFirstName + '\'' +
+                "firstName='" + actualFirstName + '\'' +
                 ", lastName='" + actualLastName + '\'' +
                 ", birthday='" + actualBirthdate + '\'' +
                 ", medication=" + actualMedications +
                 ", allergies=" + actualAllergies +
                 '}';
 
-        medicalRecords.setFistName(actualFirstName);
+        medicalRecords.setFirstName(actualFirstName);
         medicalRecords.setLastName(actualLastName);
         medicalRecords.setBirthdate(actualBirthdate);
         medicalRecords.setMedications(actualMedications);
         medicalRecords.setAllergies(actualAllergies);
 
-        assertEquals(medicalRecords.getFistName(), actualFirstName);
+        assertEquals(medicalRecords.getFirstName(), actualFirstName);
         assertEquals(medicalRecords.getLastName(), actualLastName);
         assertEquals(medicalRecords.getBirthdate(), actualBirthdate);
         assertEquals(medicalRecords.getMedications(), actualMedications);
