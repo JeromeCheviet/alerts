@@ -24,4 +24,13 @@ public class FireStationTest {
         assertEquals(fireStation.getStation(), actualStation);
         assertEquals(fireStation.toString(), actualToString);
     }
+
+    @Test
+    public void createAFireStationWithConstructor() {
+        FireStation fireStation = new FireStation(actualAddress, actualStation);
+
+        assertEquals(fireStation.getAddress(), actualAddress);
+        assertEquals(fireStation.getStation(), actualStation);
+        assertEquals(fireStation.toString(), actualToString);
+    }
 }

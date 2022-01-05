@@ -16,7 +16,12 @@ import java.util.List;
 public class MedicalRecordRepository implements GetJsonData {
 
     private static Logger logger = LogManager.getLogger(MedicalRecordRepository.class);
-    private List<String> medicalRecordList = new ArrayList<>();
+    private List<MedicalRecord> medicalRecordList = new ArrayList<>();
+    private String firstName;
+    private String lastName;
+    private String birthdate;
+    private List<String> medications;
+    private List<String> allergies;
 
     @Autowired
     private MedicalRecord medicalRecord;
@@ -30,28 +35,31 @@ public class MedicalRecordRepository implements GetJsonData {
                 for (JsonNode eachRecord : medicalRecords) {
                     logger.debug(eachRecord);
 
-                    List<String> medication = new ArrayList<>();
+                    firstName = eachRecord.get("firstName").asText();
+                    lastName = eachRecord.get("lastName").asText();
+                    birthdate = eachRecord.get("birthdate").asText();
+                    medications = new ArrayList<>();
                     if (eachRecord.get("medications").isArray()) {
                         for (JsonNode eachMedication : eachRecord.get("medications")) {
-                            medication.add(eachMedication.asText());
+                            medications.add(eachMedication.asText());
                         }
                     }
-
-                    List<String> allergy = new ArrayList<>();
+                    allergies = new ArrayList<>();
                     if (eachRecord.get("allergies").isArray()) {
                         for (JsonNode eachAllergy : eachRecord.get("allergies")) {
-                            allergy.add(eachAllergy.asText());
+                            allergies.add(eachAllergy.asText());
                         }
                     }
 
-                    medicalRecord.setFirstName(eachRecord.get("firstName").asText());
-                    medicalRecord.setLastName(eachRecord.get("lastName").asText());
-                    medicalRecord.setBirthdate(eachRecord.get("birthdate").asText());
-                    medicalRecord.setMedications(medication);
-                    medicalRecord.setAllergies(allergy);
+
+                    medicalRecord.setFirstName(firstName);
+                    medicalRecord.setLastName(lastName);
+                    medicalRecord.setBirthdate(birthdate);
+                    medicalRecord.setMedications(medications);
+                    medicalRecord.setAllergies(allergies);
 
                     logger.debug(medicalRecord.toString());
-                    medicalRecordList.add(medicalRecord.toString());
+                    medicalRecordList.add(new MedicalRecord(firstName, lastName, birthdate, medications, allergies));
                 }
             }
         } catch (NullPointerException e) {
@@ -61,7 +69,7 @@ public class MedicalRecordRepository implements GetJsonData {
         logger.debug(medicalRecordList);
     }
 
-    public List<String> getMedicalRecordList() {
+    public List<MedicalRecord> getMedicalRecordList() {
         return medicalRecordList;
     }
 

@@ -15,7 +15,9 @@ import java.util.List;
 public class FireStationRepository implements GetJsonData {
 
     private static Logger logger = LogManager.getLogger(FireStationRepository.class);
-    List<String> fireStationList = new ArrayList<>();
+    List<FireStation> fireStationList = new ArrayList<>();
+    private String address;
+    private int station;
 
     @Autowired
     private FireStation fireStation;
@@ -28,11 +30,15 @@ public class FireStationRepository implements GetJsonData {
             if (fireStations.isArray()) {
                 for (JsonNode eachStation : fireStations) {
                     logger.debug(eachStation);
-                    fireStation.setAddress(eachStation.get("address").asText());
-                    fireStation.setStation(eachStation.get("station").asInt());
+
+                    address = eachStation.get("address").asText();
+                    station = eachStation.get("station").asInt();
+
+                    fireStation.setAddress(address);
+                    fireStation.setStation(station);
 
                     logger.debug(fireStation.toString());
-                    fireStationList.add(fireStation.toString());
+                    fireStationList.add(new FireStation(address, station));
                 }
             }
 
@@ -43,7 +49,7 @@ public class FireStationRepository implements GetJsonData {
         logger.debug(fireStationList);
     }
 
-    public List<String> getFireStationList() {
+    public List<FireStation> getFireStationList() {
         return fireStationList;
     }
 }

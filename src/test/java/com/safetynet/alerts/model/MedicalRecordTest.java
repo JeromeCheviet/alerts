@@ -48,4 +48,37 @@ class MedicalRecordTest {
         assertEquals(medicalRecords.getAllergies(), actualAllergies);
         assertEquals(medicalRecords.toString(), actualToString);
     }
+
+    @Test
+    public void createMedicalRecordWithConstructor() {
+        actualMedications.add("aznol:350mg");
+        actualMedications.add("hydrapermazol:100mg");
+
+        actualAllergies.add("peanut");
+        actualAllergies.add("shellfish");
+        actualAllergies.add("aznol");
+
+        String actualToString = "MedicalRecords{" +
+                "firstName='" + actualFirstName + '\'' +
+                ", lastName='" + actualLastName + '\'' +
+                ", birthday='" + actualBirthdate + '\'' +
+                ", medication=" + actualMedications +
+                ", allergies=" + actualAllergies +
+                '}';
+
+        MedicalRecord medicalRecords = new MedicalRecord(
+                actualFirstName,
+                actualLastName,
+                actualBirthdate,
+                actualMedications,
+                actualAllergies
+        );
+
+        assertEquals(medicalRecords.getFirstName(), actualFirstName);
+        assertEquals(medicalRecords.getLastName(), actualLastName);
+        assertEquals(medicalRecords.getBirthdate(), actualBirthdate);
+        assertEquals(medicalRecords.getMedications(), actualMedications);
+        assertEquals(medicalRecords.getAllergies(), actualAllergies);
+        assertEquals(medicalRecords.toString(), actualToString);
+    }
 }
