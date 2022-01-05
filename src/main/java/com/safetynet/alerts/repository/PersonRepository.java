@@ -15,7 +15,15 @@ import java.util.List;
 public class PersonRepository implements GetJsonData {
 
     private static Logger logger = LogManager.getLogger(PersonRepository.class);
-    private List<String> personList = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private int zip;
+    private String phone;
+    private String email;
+
 
     @Autowired
     private Person person;
@@ -28,16 +36,25 @@ public class PersonRepository implements GetJsonData {
             if (persons.isArray()) {
                 for (JsonNode eachPerson : persons) {
                     logger.debug(eachPerson);
-                    person.setFirstName(eachPerson.get("firstName").asText());
-                    person.setLastName(eachPerson.get("lastName").asText());
-                    person.setAddress(eachPerson.get("address").asText());
-                    person.setCity(eachPerson.get("city").asText());
-                    person.setZip(eachPerson.get("zip").asInt());
-                    person.setPhone(eachPerson.get("phone").asText());
-                    person.setEmail(eachPerson.get("email").asText());
+
+                    firstName = eachPerson.get("firstName").asText();
+                    lastName = eachPerson.get("lastName").asText();
+                    address = eachPerson.get("address").asText();
+                    city = eachPerson.get("city").asText();
+                    zip = eachPerson.get("zip").asInt();
+                    phone = eachPerson.get("phone").asText();
+                    email = eachPerson.get("email").asText();
+
+                    person.setFirstName(firstName);
+                    person.setLastName(lastName);
+                    person.setAddress(address);
+                    person.setCity(city);
+                    person.setZip(zip);
+                    person.setPhone(phone);
+                    person.setEmail(email);
 
                     logger.debug(person.toString());
-                    personList.add(person.toString());
+                    personList.add(new Person(firstName, lastName, address, city, zip, phone, email));
                 }
             }
         } catch (NullPointerException e) {
@@ -47,7 +64,7 @@ public class PersonRepository implements GetJsonData {
         logger.debug(personList);
     }
 
-    public List<String> getPersonList() {
+    public List<Person> getPersonList() {
         return personList;
     }
 }

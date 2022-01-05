@@ -48,4 +48,27 @@ public class PersonTest {
         assertEquals(person.getEmail(), actualEmail);
         assertEquals(person.toString(), actualToString);
     }
+
+    @Test
+    public void createAPersonWithConstructor() {
+        Person person = new Person(
+                actualFirstName,
+                actualLastName,
+                actualAdress,
+                actualCity,
+                actualZip,
+                actualPhone,
+                actualEmail
+        );
+
+        assertEquals(person.getFirstName(), actualFirstName);
+        assertEquals(person.getLastName(), actualLastName);
+        assertEquals(person.getAddress(), actualAdress);
+        assertEquals(person.getCity(), actualCity);
+        assertEquals(person.getZip(), actualZip);
+        assertEquals(person.getPhone(), actualPhone);
+        assertEquals(person.getEmail(), actualEmail);
+        assertEquals(person.toString(), actualToString);
+    }
+
 }
