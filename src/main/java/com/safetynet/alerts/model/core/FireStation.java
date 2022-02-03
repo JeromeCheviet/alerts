@@ -1,10 +1,13 @@
-package com.safetynet.alerts.model;
+package com.safetynet.alerts.model.core;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-//TODO JavaDoc
 @Component
 public class FireStation {
+
+    private static final Logger logger = LogManager.getLogger(FireStation.class);
 
     private String address;
     private int station;
@@ -13,6 +16,8 @@ public class FireStation {
     }
 
     public FireStation(String address, int station) {
+        logger.debug("FireStation constructor");
+        logger.debug("address : " + address + " | station : " + station);
         this.address = address;
         this.station = station;
     }

@@ -1,12 +1,14 @@
 package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.safetynet.alerts.model.MedicalRecord;
+import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,20 +17,22 @@ import java.util.List;
 @Repository
 public class MedicalRecordRepository implements GetJsonData {
 
-    private static Logger logger = LogManager.getLogger(MedicalRecordRepository.class);
-    private List<MedicalRecord> medicalRecordList = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(MedicalRecordRepository.class);
+
+    private final List<MedicalRecordDTO> medicalRecordDTOList = new ArrayList<>();
+    private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private String firstName;
     private String lastName;
-    private String birthdate;
+    private LocalDate birthdate;
     private List<String> medications;
     private List<String> allergies;
 
     @Autowired
-    private MedicalRecord medicalRecord;
+    private MedicalRecordDTO medicalRecordDTO;
 
     @Override
     public void setModel(JsonNode medicalRecords) {
-        logger.debug("Class MedicalRecordsRepository setModel");
+        logger.debug("MedicalRecordsRepository setModel");
 
         try {
             if (medicalRecords.isArray()) {
@@ -37,7 +41,7 @@ public class MedicalRecordRepository implements GetJsonData {
 
                     firstName = eachRecord.get("firstName").asText();
                     lastName = eachRecord.get("lastName").asText();
-                    birthdate = eachRecord.get("birthdate").asText();
+                    birthdate = LocalDate.parse(eachRecord.get("birthdate").asText(), format);
                     medications = new ArrayList<>();
                     if (eachRecord.get("medications").isArray()) {
                         for (JsonNode eachMedication : eachRecord.get("medications")) {
@@ -51,26 +55,27 @@ public class MedicalRecordRepository implements GetJsonData {
                         }
                     }
 
+                    medicalRecordDTO.setFirstName(firstName);
+                    medicalRecordDTO.setLastName(lastName);
+                    medicalRecordDTO.setBirthdate(birthdate);
+                    medicalRecordDTO.setMedications(medications);
+                    medicalRecordDTO.setAllergies(allergies);
 
-                    medicalRecord.setFirstName(firstName);
-                    medicalRecord.setLastName(lastName);
-                    medicalRecord.setBirthdate(birthdate);
-                    medicalRecord.setMedications(medications);
-                    medicalRecord.setAllergies(allergies);
-
-                    logger.debug(medicalRecord.toString());
-                    medicalRecordList.add(new MedicalRecord(firstName, lastName, birthdate, medications, allergies));
+                    logger.debug(medicalRecordDTO.toString());
+                    medicalRecordDTOList.add(new MedicalRecordDTO(firstName, lastName, birthdate, medications, allergies));
                 }
             }
         } catch (NullPointerException e) {
             logger.error("Error on Json field name " + e);
             System.exit(1);
         }
-        logger.debug(medicalRecordList);
+        logger.debug(medicalRecordDTOList);
     }
 
-    public List<MedicalRecord> getMedicalRecordList() {
-        return medicalRecordList;
+    public List<MedicalRecordDTO> getMedicalRecordList() {
+        logger.debug("MedicalRecordRepository getMedicalRecordList");
+        logger.debug("return " + medicalRecordDTOList);
+        return medicalRecordDTOList;
     }
 
 }

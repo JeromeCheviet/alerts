@@ -13,16 +13,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PersonControllerTest {
+public class FireStationDTOControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testGetPersons() throws Exception {
-        mockMvc.perform(get("/persons"))
+    public void testGetFireStation() throws Exception {
+        mockMvc.perform(get("/firestations"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].firstName", is("John")));
+                .andExpect(jsonPath("$[0].station", is(3)));
     }
-
 }

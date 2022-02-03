@@ -1,6 +1,6 @@
 package com.safetynet.alerts.controller;
 
-import com.safetynet.alerts.model.MedicalRecord;
+import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
 import com.safetynet.alerts.service.MedicalRecordService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 public class MedicalRecordController {
 
-    private static Logger logger = LogManager.getLogger(MedicalRecordController.class);
+    private static final Logger logger = LogManager.getLogger(MedicalRecordController.class);
 
     @Autowired
     private MedicalRecordService medicalRecordService;
 
     @GetMapping("/medicalrecords")
-    public List<MedicalRecord> listMedicalRecords() {
+    public List<MedicalRecordDTO> listMedicalRecords() {
         logger.info("Ask GET medicalrecords");
         logger.info("Response : " + medicalRecordService.findAll());
         return medicalRecordService.findAll();
