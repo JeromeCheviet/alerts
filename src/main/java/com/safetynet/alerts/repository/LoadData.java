@@ -22,7 +22,7 @@ import java.io.InputStream;
 @Repository
 public class LoadData implements CommandLineRunner {
 
-    private static Logger logger = LogManager.getLogger(LoadData.class);
+    private static final Logger logger = LogManager.getLogger(LoadData.class);
 
 
     @Autowired
@@ -37,6 +37,7 @@ public class LoadData implements CommandLineRunner {
     private MedicalRecordRepository medicalRecordRepository;
 
     public void readJson() {
+        logger.debug("LoadData readJson");
 
         Resource resource = resourceLoader.getResource("classpath:data.json");
         String jsonData = null;
@@ -70,43 +71,11 @@ public class LoadData implements CommandLineRunner {
             System.exit(1);
         }
 
-        //JsonNode personsNode = node.get("persons");
-        //logger.debug(personsNode);
         personRepository.setModel(node.get("persons"));
         fireStationRepository.setModel(node.get("firestations"));
         medicalRecordRepository.setModel(node.get("medicalrecords"));
 
-        //logger.debug(node.get("persons"));
-        //logger.debug(node.get("firestations"));
-        //logger.debug(node.get("medicalrecords"));
-
-        //Map<String, Object> jsonMap = objectMapper.convertValue(node, new TypeReference<Map<String, Object>>() {});
-
-        //System.out.println(persons.get("persons"));
-
-        /*for (String key : jsonMap.keySet()) {
-            System.out.println(key +" : "+ jsonMap.get(key));
-            if ( key == "persons" ){
-
-            }
-        }
-*/
-        //personRepository.setModel(node.get("persons"));
-
-
     }
-
-    /*public JsonNode getPersons(JsonNode node) {
-        return node.get("persons");
-    }
-
-    public JsonNode getFireStations(JsonNode node) {
-        return node.get("firestations");
-    }
-
-    public JsonNode getMedicalRecords(JsonNode node) {
-        return node.get("medicalrecords");
-    }*/
 
     @Override
     public void run(String... args) throws Exception {

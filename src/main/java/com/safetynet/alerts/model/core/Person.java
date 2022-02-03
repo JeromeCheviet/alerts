@@ -1,10 +1,14 @@
-package com.safetynet.alerts.model;
+package com.safetynet.alerts.model.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-//TODO JavaDoc
 @Component
 public class Person {
+
+    private static final Logger logger = LogManager.getLogger(Person.class);
 
     private String firstName;
     private String lastName;
@@ -18,6 +22,8 @@ public class Person {
     }
 
     public Person(String firstName, String lastName, String address, String city, int zip, String phone, String email) {
+        logger.debug("Person constructor");
+        logger.debug("firstName : " + firstName + " | lastName : " + lastName + " | address : " + address + " | city : " + city + " | zip : " + zip + " | phone : " + phone + " | email : " + email);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -75,6 +81,7 @@ public class Person {
         this.phone = phone;
     }
 
+    @JsonIgnoreProperties(value = {"firstName", "lastName", "address", "city", "zip", "phone"})
     public String getEmail() {
         return email;
     }
@@ -85,7 +92,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "PersonDTO{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +

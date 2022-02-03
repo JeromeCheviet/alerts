@@ -1,23 +1,32 @@
-package com.safetynet.alerts.model;
+package com.safetynet.alerts.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //TODO JavaDoc
 @Component
-public class MedicalRecord {
+public class MedicalRecordDTO {
+
+    private static final Logger logger = LogManager.getLogger(MedicalRecordDTO.class);
 
     private String firstName;
     private String lastName;
-    private String birthdate;
+    private LocalDate birthdate;
     private List<String> medications;
     private List<String> allergies;
 
-    public MedicalRecord() {
+    public MedicalRecordDTO() {
     }
 
-    public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications, List<String> allergies) {
+    public MedicalRecordDTO(String firstName, String lastName, LocalDate birthdate, List<String> medications, List<String> allergies) {
+        logger.debug("MedicalRecortDTO constructor");
+        logger.debug("firstname : " + firstName + " | lastName : " + lastName + " | birthdate : " + birthdate + " | medications : " + medications + " | allergies : " + allergies);
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
@@ -41,11 +50,12 @@ public class MedicalRecord {
         this.lastName = lastName;
     }
 
-    public String getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -70,7 +80,7 @@ public class MedicalRecord {
         return "MedicalRecords{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", birthday='" + birthdate + '\'' +
+                ", birthdate='" + birthdate + '\'' +
                 ", medication=" + medications +
                 ", allergies=" + allergies +
                 '}';

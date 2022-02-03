@@ -1,7 +1,7 @@
 package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.safetynet.alerts.model.FireStation;
+import com.safetynet.alerts.model.DTO.FireStationDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,14 @@ import java.util.List;
 @Repository
 public class FireStationRepository implements GetJsonData {
 
-    private static Logger logger = LogManager.getLogger(FireStationRepository.class);
-    List<FireStation> fireStationList = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
+
+    private List<FireStationDTO> fireStationDTOList = new ArrayList<>();
     private String address;
     private int station;
 
     @Autowired
-    private FireStation fireStation;
+    private FireStationDTO fireStationDTO;
 
     @Override
     public void setModel(JsonNode fireStations) {
@@ -34,11 +35,11 @@ public class FireStationRepository implements GetJsonData {
                     address = eachStation.get("address").asText();
                     station = eachStation.get("station").asInt();
 
-                    fireStation.setAddress(address);
-                    fireStation.setStation(station);
+                    fireStationDTO.setAddress(address);
+                    fireStationDTO.setStation(station);
 
-                    logger.debug(fireStation.toString());
-                    fireStationList.add(new FireStation(address, station));
+                    logger.debug(fireStationDTO.toString());
+                    fireStationDTOList.add(new FireStationDTO(address, station));
                 }
             }
 
@@ -46,10 +47,12 @@ public class FireStationRepository implements GetJsonData {
             logger.error("Error on Json field name " + e);
             System.exit(1);
         }
-        logger.debug(fireStationList);
+        logger.debug(fireStationDTOList);
     }
 
-    public List<FireStation> getFireStationList() {
-        return fireStationList;
+    public List<FireStationDTO> getFireStationList() {
+        logger.debug("FireStationRepository getFireStationList");
+        logger.debug("return " + fireStationDTOList);
+        return fireStationDTOList;
     }
 }

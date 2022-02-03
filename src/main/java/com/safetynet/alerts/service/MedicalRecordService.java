@@ -1,10 +1,11 @@
 package com.safetynet.alerts.service;
 
-import com.safetynet.alerts.model.MedicalRecord;
+import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
 
 import java.util.List;
 
 public interface MedicalRecordService {
 
-    List<MedicalRecord> findAll();
+    List<MedicalRecordDTO> findAll();
+    List<MedicalRecordDTO> findByFirstName(String firstName);
 }
