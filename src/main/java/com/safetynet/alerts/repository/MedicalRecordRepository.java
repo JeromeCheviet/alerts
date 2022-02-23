@@ -1,7 +1,7 @@
 package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
+import com.safetynet.alerts.model.dto.MedicalRecordDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +55,8 @@ public class MedicalRecordRepository implements GetJsonData {
                         }
                     }
 
-                    medicalRecordDTO.setFirstName(firstName);
-                    medicalRecordDTO.setLastName(lastName);
-                    medicalRecordDTO.setBirthdate(birthdate);
-                    medicalRecordDTO.setMedications(medications);
-                    medicalRecordDTO.setAllergies(allergies);
 
-                    logger.debug(medicalRecordDTO.toString());
+
                     medicalRecordDTOList.add(new MedicalRecordDTO(firstName, lastName, birthdate, medications, allergies));
                 }
             }
@@ -76,6 +71,20 @@ public class MedicalRecordRepository implements GetJsonData {
         logger.debug("MedicalRecordRepository getMedicalRecordList");
         logger.debug("return " + medicalRecordDTOList);
         return medicalRecordDTOList;
+    }
+
+    public void addMedicalRecord(MedicalRecordDTO medicalRecordDTO) {
+        logger.debug("MedicalRecordRepository addMedicalRecord");
+        logger.debug("medicalRecordDTO : " + medicalRecordDTO.toString());
+
+        medicalRecordDTOList.add(medicalRecordDTO);
+    }
+
+    public void deleteMedicalRecord(MedicalRecordDTO medicalRecordDTO) {
+        logger.debug("MedicalRecordRepository deleteMecicalRecord");
+        logger.debug("medicalRecordDTO : " + medicalRecordDTO );
+
+        medicalRecordDTOList.remove(medicalRecordDTO);
     }
 
 }

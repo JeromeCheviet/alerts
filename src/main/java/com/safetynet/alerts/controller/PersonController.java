@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.safetynet.alerts.model.application.ChildrenByAddressConstructor;
+import com.safetynet.alerts.model.application.CustomMessage;
 import com.safetynet.alerts.model.application.PersonByAddress;
 import com.safetynet.alerts.model.application.PersonInfo;
 import com.safetynet.alerts.model.core.Person;
@@ -14,11 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,6 +29,44 @@ public class PersonController {
     private PersonService personService;
     @Autowired
     private ChildrenByAddressConstructor childrenByAddressConstructor;
+
+    @PostMapping(value = "/person")
+    public ResponseEntity<Object> createPerson(@RequestBody Person person) {
+        logger.info("POST new Person : " + person.toString());
+
+        if (personService.personExist(person)) {
+            logger.info("Person already exist");
+            return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), "Person already exist"), HttpStatus.CONFLICT);
+        }
+        logger.info("New Person " + person.toString() + " has been created");
+        return new ResponseEntity<>(personService.addPerson(person), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/person")
+    public ResponseEntity<Object> updatePerson(@RequestBody Person person) {
+        logger.info("PUT update person : " + person.toString());
+
+        if (!personService.personExist(person)) {
+            logger.info("Person not exist");
+            return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), "Person not exist"), HttpStatus.CONFLICT);
+        }
+        logger.info("Person " + person.toString() + " has been updated");
+        return new ResponseEntity<>(personService.updatePerson(person), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/person")
+    public ResponseEntity<CustomMessage> deletePerson(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
+        logger.info("DELETE person with firstName : " + firstName + " and lastName : " + lastName);
+
+        boolean isDeleted = personService.deletePerson(firstName, lastName);
+        logger.debug("isDeleted : " + isDeleted);
+        if (isDeleted) {
+            logger.info(firstName + " " + lastName + " has been deleted");
+            return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.OK.value(),  firstName + " " + lastName + " has been deleted"), HttpStatus.OK);
+        }
+        logger.info(firstName + " " + lastName + " has not been deleted");
+        return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), "Person not delete"), HttpStatus.CONFLICT);
+    }
 
     @GetMapping("/persons")
     public List<Person> listPersons() {

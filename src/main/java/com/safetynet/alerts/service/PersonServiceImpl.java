@@ -1,9 +1,9 @@
 package com.safetynet.alerts.service;
 
 import com.safetynet.alerts.manager.PersonMapper;
-import com.safetynet.alerts.model.DTO.FireStationDTO;
-import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
-import com.safetynet.alerts.model.DTO.PersonDTO;
+import com.safetynet.alerts.model.dto.FireStationDTO;
+import com.safetynet.alerts.model.dto.MedicalRecordDTO;
+import com.safetynet.alerts.model.dto.PersonDTO;
 import com.safetynet.alerts.model.application.*;
 import com.safetynet.alerts.model.core.Person;
 import com.safetynet.alerts.repository.FireStationRepository;
@@ -33,6 +33,18 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private CalculateDate calculateDate;
 
+    @Override
+    public boolean personExist(Person person) {
+        logger.debug("PersonService personExist");
+        logger.debug("person : " + person);
+
+        for (PersonDTO personDTO : personRepository.getPersonList()) {
+            if (personDTO.getFirstName().equals(person.getFirstName()) && personDTO.getLastName().equals(person.getLastName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public List<Person> findAll() {
@@ -199,6 +211,47 @@ public class PersonServiceImpl implements PersonService {
         logger.debug("personInfoList : " + personInfoList);
 
         return personInfoList;
+    }
+
+    @Override
+    public List<Person> addPerson(Person person) {
+        logger.debug("PersonService addPerson");
+        logger.debug("person : " + person.toString());
+
+        personRepository.addPerson(personMapper.mapDomainPersonToDto(person));
+        return personMapper.mapDtoToDomainPersonList(personRepository.getPersonList());
+    }
+
+    @Override
+    public boolean deletePerson(String firstName, String lastName) {
+        logger.debug("PersonService deletePerson");
+        logger.debug("firstName : " + firstName + " | lastName : " + lastName);
+
+        for (PersonDTO personDTO : personRepository.getPersonList()) {
+            if (personDTO.getFirstName().equals(firstName) && personDTO.getLastName().equals(lastName)) {
+                logger.debug("personDTO : " + personDTO.toString());
+                personRepository.deletePerson(personDTO);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<Person> updatePerson(Person person) {
+        logger.debug("PersonService updatePerson");
+        logger.debug("person : " + person.toString());
+
+        for (PersonDTO personDTO : personRepository.getPersonList()) {
+            if (personDTO.getFirstName().equals(person.getFirstName()) & personDTO.getLastName().equals(person.getLastName())) {
+                personDTO.setAddress(person.getAddress());
+                personDTO.setCity(person.getAddress());
+                personDTO.setZip(person.getZip());
+                personDTO.setPhone(person.getPhone());
+                personDTO.setEmail(person.getEmail());
+            }
+        }
+        return personMapper.mapDtoToDomainPersonList(personRepository.getPersonList());
     }
 
 }

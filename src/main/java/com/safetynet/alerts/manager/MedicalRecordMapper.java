@@ -1,6 +1,6 @@
 package com.safetynet.alerts.manager;
 
-import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
+import com.safetynet.alerts.model.dto.MedicalRecordDTO;
 import com.safetynet.alerts.model.core.MedicalRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,4 +32,19 @@ public class MedicalRecordMapper {
         logger.debug("medicalRecordDTOArrayList : " + medicalRecordDTOArrayList);
         return medicalRecordDTOArrayList.stream().map(medicalRecordDTO -> mapDtoToDomainMedicalRecord(medicalRecordDTO)).collect(Collectors.toList());
     }
+
+       public MedicalRecordDTO mapDomainMedicalRecordToDto(MedicalRecord medicalRecord) {
+        logger.debug("MedicalRecordMapper mapDomainMedicalRecordToDto");
+        logger.debug("medicalRecord : " + medicalRecord.toString());
+        MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+        medicalRecordDTO.setFirstName(medicalRecord.getFirstName());
+        medicalRecordDTO.setLastName(medicalRecord.getLastName());
+        medicalRecordDTO.setBirthdate(medicalRecord.getBirthdate());
+        medicalRecordDTO.setMedications(medicalRecord.getMedications());
+        medicalRecordDTO.setAllergies(medicalRecord.getAllergies());
+
+        logger.debug("return " + medicalRecordDTO.toString());
+        return medicalRecordDTO;
+    }
+
 }

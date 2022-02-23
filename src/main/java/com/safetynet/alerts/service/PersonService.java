@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface PersonService {
 
+    boolean personExist(Person person);
+
     List<Person> findAll();
     List<Person> findByFirstName(String firstName);
     List<Person> findByAddress(String address);
@@ -16,4 +18,7 @@ public interface PersonService {
     PersonByAddress findPersonByAddress(String address);
     ChildrenByAddressConstructor findChildrenByAddress(String address);
     List<PersonInfo> findPersonInfo(String firstName, String lastName);
+    List<Person> addPerson(Person person);
+    boolean deletePerson(String firstName, String lastName);
+    List<Person> updatePerson(Person person);
 }

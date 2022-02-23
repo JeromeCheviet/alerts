@@ -1,6 +1,6 @@
 package com.safetynet.alerts.manager;
 
-import com.safetynet.alerts.model.DTO.FireStationDTO;
+import com.safetynet.alerts.model.dto.FireStationDTO;
 import com.safetynet.alerts.model.core.FireStation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +18,7 @@ public class FireStationMapper {
         logger.debug("FireStationMapper mapDtoToDomainFireStation");
         logger.debug("fireStationDTO : " + fireStationDTO.toString());
         FireStation fireStation = new FireStation();
-        fireStation.setStation(fireStationDTO.getStation());
+        fireStation.setAddress(fireStationDTO.getAddress());
         fireStation.setStation(fireStationDTO.getStation());
 
         logger.debug("return " + fireStation.toString());
@@ -30,5 +30,16 @@ public class FireStationMapper {
         logger.debug("firesStationDTOArrayList : " + fireStationDTOArrayList);
 
         return fireStationDTOArrayList.stream().map(fireStationDTO -> mapDtoToDomainFireStation(fireStationDTO)).collect(Collectors.toList());
+    }
+
+    public FireStationDTO mapDomainFireStationToDto(FireStation fireStation) {
+        logger.debug("FireStationMapper mapDtoToDomainFireStation");
+        logger.debug("fireStationDTO : " + fireStation.toString());
+        FireStationDTO fireStationDTO = new FireStationDTO();
+        fireStationDTO.setAddress(fireStation.getAddress());
+        fireStationDTO.setStation(fireStation.getStation());
+
+        logger.debug("return " + fireStationDTO.toString());
+        return fireStationDTO;
     }
 }

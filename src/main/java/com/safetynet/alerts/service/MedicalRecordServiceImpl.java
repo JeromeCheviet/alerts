@@ -1,6 +1,8 @@
 package com.safetynet.alerts.service;
 
-import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
+import com.safetynet.alerts.manager.MedicalRecordMapper;
+import com.safetynet.alerts.model.core.MedicalRecord;
+import com.safetynet.alerts.model.dto.MedicalRecordDTO;
 import com.safetynet.alerts.repository.MedicalRecordRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +19,23 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
+
+    @Autowired
+    private MedicalRecordMapper medicalRecordMapper;
+
+    @Override
+    public boolean medicalRecordExist(MedicalRecord medicalRecord) {
+        logger.debug("MedicalRecordService medicalRecordExist");
+        logger.debug("medicalRecord : " + medicalRecord);
+
+        for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
+            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) && medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public List<MedicalRecordDTO> findAll() {
@@ -45,4 +64,44 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         logger.debug("medicalRecordDTOList");
         return medicalRecordDTOList;
     }
+
+    @Override
+    public List<MedicalRecord> addMedicalRecord(MedicalRecord medicalRecord) {
+        logger.debug("MedicalRecordService addMedicalRecord");
+        logger.debug("medicalRecord : " + medicalRecord.toString());
+
+        medicalRecordRepository.addMedicalRecord(medicalRecordMapper.mapDomainMedicalRecordToDto(medicalRecord));
+        return medicalRecordMapper.mapToDomainMedicalRecordList(medicalRecordRepository.getMedicalRecordList());
+    }
+
+    @Override
+    public List<MedicalRecord> updateMedicalRecord(MedicalRecord medicalRecord) {
+        logger.debug("MedicalRecordService updateMedicalRecord");
+        logger.debug("medicalRecord : " + medicalRecord.toString());
+
+        for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
+            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) & medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
+                medicalRecordDTO.setBirthdate(medicalRecord.getBirthdate());
+                medicalRecordDTO.setMedications(medicalRecord.getMedications());
+                medicalRecordDTO.setAllergies(medicalRecord.getAllergies());
+            }
+        }
+        return medicalRecordMapper.mapToDomainMedicalRecordList(medicalRecordRepository.getMedicalRecordList());
+    }
+
+    @Override
+    public boolean deleteMedicalRecord(String firstName, String lastName) {
+        logger.debug("MedicalRecordService deleteMedicalRecord");
+        logger.debug("firstName : " + firstName + " | lastName : " + lastName);
+
+        for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
+            if (medicalRecordDTO.getFirstName().equals(firstName) & medicalRecordDTO.getLastName().equals(lastName)) {
+                logger.debug("medicalRecordDTO : " + medicalRecordDTO.toString());
+                medicalRecordRepository.deleteMedicalRecord(medicalRecordDTO);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
