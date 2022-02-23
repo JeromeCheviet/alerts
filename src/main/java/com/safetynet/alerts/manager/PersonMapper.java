@@ -1,6 +1,6 @@
 package com.safetynet.alerts.manager;
 
-import com.safetynet.alerts.model.DTO.PersonDTO;
+import com.safetynet.alerts.model.dto.PersonDTO;
 import com.safetynet.alerts.model.core.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,5 +35,21 @@ public class PersonMapper {
         logger.debug("personDTOArrayList : " + personDTOArrayList);
 
         return personDTOArrayList.stream().map(personDTO -> mapDtoToDomainPerson(personDTO)).collect(Collectors.toList());
+    }
+
+    public PersonDTO mapDomainPersonToDto(Person person) {
+        logger.debug("PersonMapper mapDomainPersonToDto");
+        logger.debug("person : " + person.toString());
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setFirstName(person.getFirstName());
+        personDTO.setLastName(person.getLastName());
+        personDTO.setAddress(person.getAddress());
+        personDTO.setCity(person.getCity());
+        personDTO.setZip(person.getZip());
+        personDTO.setPhone(person.getPhone());
+        personDTO.setEmail(person.getEmail());
+
+        logger.debug("return " + personDTO.toString());
+        return personDTO;
     }
 }

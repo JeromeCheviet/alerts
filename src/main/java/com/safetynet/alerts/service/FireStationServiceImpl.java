@@ -1,12 +1,14 @@
 package com.safetynet.alerts.service;
 
-import com.safetynet.alerts.model.DTO.FireStationDTO;
-import com.safetynet.alerts.model.DTO.MedicalRecordDTO;
-import com.safetynet.alerts.model.DTO.PersonDTO;
+import com.safetynet.alerts.manager.FireStationMapper;
 import com.safetynet.alerts.model.application.AddressByFireStation;
 import com.safetynet.alerts.model.application.PersonByFireStation;
 import com.safetynet.alerts.model.application.PersonInfo;
+import com.safetynet.alerts.model.core.FireStation;
 import com.safetynet.alerts.model.core.Person;
+import com.safetynet.alerts.model.dto.FireStationDTO;
+import com.safetynet.alerts.model.dto.MedicalRecordDTO;
+import com.safetynet.alerts.model.dto.PersonDTO;
 import com.safetynet.alerts.repository.FireStationRepository;
 import com.safetynet.alerts.repository.MedicalRecordRepository;
 import com.safetynet.alerts.repository.PersonRepository;
@@ -39,11 +41,22 @@ public class FireStationServiceImpl implements FireStationService {
     @Autowired
     private CalculateDate calculateDate;
 
-    /*
-    public FireStationServiceImpl(FireStationRepository fireStationRepository) {
-        this.fireStationRepository = fireStationRepository;
+    @Autowired
+    private FireStationMapper fireStationMapper;
+
+    @Override
+    public boolean addressExist(FireStation fireStation) {
+        logger.debug("FireStationService addressExist");
+        logger.debug("fireStation : " + fireStation);
+
+        for (FireStationDTO fireStationDTO : fireStationRepository.getFireStationList()) {
+            if (fireStationDTO.getAddress().equals(fireStation.getAddress())) {
+                return true;
+            }
+        }
+        return false;
+
     }
-     */
 
     @Override
     public List<FireStationDTO> findAll() {
@@ -161,6 +174,48 @@ public class FireStationServiceImpl implements FireStationService {
         }
         logger.debug("addressByFireStationList : " + addressByFireStationList);
         return addressByFireStationList;
+    }
+
+    @Override
+    public List<FireStation> addFireStation(FireStation fireStation) {
+        logger.debug("FireStationService addFireStation");
+        logger.debug("fireStation : " + fireStation.toString());
+
+        fireStationRepository.addFireStation(fireStationMapper.mapDomainFireStationToDto(fireStation));
+        return fireStationMapper.mapDtoToDomainFireStationList(fireStationRepository.getFireStationList());
+    }
+
+    @Override
+    public int deleteFireStation(String address, Integer stationNumber) {
+        logger.debug("FireStationService deleteMappingFireStationNumber");
+        logger.debug("address : " + address + " | stationNumber : " + stationNumber);
+
+
+        if (address != null && stationNumber != null) {
+            fireStationRepository.deleteFireStation(address, stationNumber);
+            return 1;
+        } else if (address == null && stationNumber != null) {
+            fireStationRepository.deleteMappingFireStationNumber(stationNumber);
+            return 2;
+        } else if (address != null && stationNumber == null) {
+            fireStationRepository.deleteMappingFireStationAddress(address);
+            return 3;
+        }
+
+        return 9999;
+    }
+
+    @Override
+    public List<FireStation> updateFireStation(FireStation fireStation) {
+        logger.debug("FireStationService updateFireStation");
+        logger.debug("fireStation : " + fireStation.toString());
+
+        for (FireStationDTO fireStationDTO : fireStationRepository.getFireStationList()) {
+            if (fireStationDTO.getAddress().equals(fireStation.getAddress())) {
+                fireStationDTO.setStation(fireStation.getStation());
+            }
+        }
+        return fireStationMapper.mapDtoToDomainFireStationList(fireStationRepository.getFireStationList());
     }
 
 }

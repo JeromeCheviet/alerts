@@ -1,7 +1,7 @@
 package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.safetynet.alerts.model.DTO.PersonDTO;
+import com.safetynet.alerts.model.dto.PersonDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +46,7 @@ public class PersonRepository implements GetJsonData {
                     phone = eachPerson.get("phone").asText();
                     email = eachPerson.get("email").asText();
 
-                    personDTO.setFirstName(firstName);
-                    personDTO.setLastName(lastName);
-                    personDTO.setAddress(address);
-                    personDTO.setCity(city);
-                    personDTO.setZip(zip);
-                    personDTO.setPhone(phone);
-                    personDTO.setEmail(email);
 
-                    logger.debug(personDTO.toString());
                     personDTOList.add(new PersonDTO(firstName, lastName, address, city, zip, phone, email));
                 }
             }
@@ -70,4 +62,19 @@ public class PersonRepository implements GetJsonData {
         logger.debug("return " + personDTOList);
         return personDTOList;
     }
+
+    public void addPerson(PersonDTO personDTO) {
+        logger.debug("PersonRepository addPerson");
+        logger.debug("personDTO : " + personDTO.toString());
+
+        personDTOList.add(personDTO);
+    }
+
+    public void deletePerson(PersonDTO personDTO) {
+        logger.debug("PersonRepository deletePerson");
+        logger.debug("PersonDTO : " + personDTO.toString());
+
+        personDTOList.remove(personDTO);
+    }
+
 }

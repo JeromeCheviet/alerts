@@ -1,13 +1,14 @@
 package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.safetynet.alerts.model.DTO.FireStationDTO;
+import com.safetynet.alerts.model.dto.FireStationDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 //TODO Tests and JavaDoc
@@ -35,10 +36,6 @@ public class FireStationRepository implements GetJsonData {
                     address = eachStation.get("address").asText();
                     station = eachStation.get("station").asInt();
 
-                    fireStationDTO.setAddress(address);
-                    fireStationDTO.setStation(station);
-
-                    logger.debug(fireStationDTO.toString());
                     fireStationDTOList.add(new FireStationDTO(address, station));
                 }
             }
@@ -55,4 +52,54 @@ public class FireStationRepository implements GetJsonData {
         logger.debug("return " + fireStationDTOList);
         return fireStationDTOList;
     }
+
+    public void addFireStation(FireStationDTO fireStationDTO ) {
+        logger.debug("FireStationRepository addFireStation");
+        logger.debug("fireStationDTO : " + fireStationDTO.toString());
+
+        fireStationDTOList.add(fireStationDTO);
+    }
+
+    public void deleteMappingFireStationNumber(int stationNumber) {
+        logger.debug("FireStationRepository deleteMappingFireStationNumber");
+        logger.debug("stationNumber : " + stationNumber);
+
+        Iterator<FireStationDTO> fireStationDTOIterator = getFireStationList().iterator();
+
+        while (fireStationDTOIterator.hasNext()) {
+            fireStationDTO = fireStationDTOIterator.next();
+            if (fireStationDTO.getStation() == stationNumber) {
+                fireStationDTOIterator.remove();
+            }
+        }
+    }
+
+    public void deleteMappingFireStationAddress(String address) {
+        logger.debug("FireStationRepository deleteMappingFireStationAddress");
+        logger.debug("address : " + address);
+
+        Iterator<FireStationDTO> fireStationDTOIterator = fireStationDTOList.iterator();
+
+        while (fireStationDTOIterator.hasNext()) {
+            fireStationDTO = fireStationDTOIterator.next();
+            if (fireStationDTO.getAddress().equals(address)) {
+                fireStationDTOIterator.remove();
+            }
+        }
+    }
+
+    public void deleteFireStation(String address, int stationNumber) {
+        logger.debug("FireStationRepository deleteFireStation");
+        logger.debug("address : " + address + " | stationNumber : " + stationNumber);
+
+        Iterator<FireStationDTO> fireStationDTOIterator = fireStationDTOList.iterator();
+
+        while (fireStationDTOIterator.hasNext()) {
+            fireStationDTO = fireStationDTOIterator.next();
+            if (fireStationDTO.getAddress().equals(address) && fireStationDTO.getStation() == stationNumber) {
+                fireStationDTOIterator.remove();
+            }
+        }
+    }
+
 }

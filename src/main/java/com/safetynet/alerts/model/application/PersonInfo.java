@@ -76,6 +76,22 @@ public class PersonInfo {
         this.address = address;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+
     public int getAge() {
         return age;
     }
@@ -114,6 +130,8 @@ public class PersonInfo {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", zip=" + zip +
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
