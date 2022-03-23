@@ -103,7 +103,7 @@ public class FireStationController {
         MappingJacksonValue personInfoFilters = new MappingJacksonValue(personByFireStation);
         personInfoFilters.setFilters(filters);
 
-        if (personByFireStation.toString().isEmpty()) {
+        if (personByFireStation.getPersonInfoList().isEmpty()) {
             return new ResponseEntity<>(personInfoFilters, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(personInfoFilters, HttpStatus.OK);

@@ -12,6 +12,9 @@ public class PersonByAddress {
     private List<PersonInfo> personInfoList;
     private int fireStationNumber;
 
+    public PersonByAddress() {
+
+    }
 
     public PersonByAddress(List<PersonInfo> personInfoList, int fireStationNumber) {
         logger.debug("PersonByAddress constructor");

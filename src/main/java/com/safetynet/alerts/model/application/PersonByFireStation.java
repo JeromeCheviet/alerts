@@ -14,6 +14,10 @@ public class PersonByFireStation {
     private int nbAdult;
     private int nbMinor;
 
+    public PersonByFireStation() {
+
+    }
+
     public PersonByFireStation(List<PersonInfo> personInfoList, int nbAdult, int nbMinor) {
         logger.debug("PersonByFireStation constructor");
         logger.debug("personInfoList : " + personInfoList + " | nbAdult : " + nbAdult + " | nbMinor : " + nbMinor);
