@@ -12,6 +12,10 @@ public class AdultByAddress {
     private String firstName;
     private String lastName;
 
+    public AdultByAddress() {
+
+    }
+
     public AdultByAddress(String firstName, String lastName) {
         logger.debug("AdultByAddress constructor");
         logger.debug("firstName : " + firstName + " | lastName : " + lastName);

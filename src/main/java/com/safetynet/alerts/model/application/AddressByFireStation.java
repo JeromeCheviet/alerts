@@ -2,7 +2,6 @@ package com.safetynet.alerts.model.application;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

@@ -13,6 +13,10 @@ public class ChildrenByAddress {
     private String lastName;
     private int age;
 
+    public ChildrenByAddress() {
+
+    }
+
     public ChildrenByAddress(String firstName, String lastName, int age) {
         logger.debug("ChildrenByAddress constructor");
         logger.debug("firstName : " + firstName + " | lastName : " + lastName + " | age : " + age);

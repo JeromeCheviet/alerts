@@ -51,9 +51,11 @@ public class FireStationServiceImpl implements FireStationService {
 
         for (FireStationDTO fireStationDTO : fireStationRepository.getFireStationList()) {
             if (fireStationDTO.getAddress().equals(fireStation.getAddress())) {
+                logger.debug("Fire station exist");
                 return true;
             }
         }
+        logger.debug("Fire station not exist");
         return false;
 
     }

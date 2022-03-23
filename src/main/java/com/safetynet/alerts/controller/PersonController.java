@@ -27,8 +27,6 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
-    @Autowired
-    private ChildrenByAddressConstructor childrenByAddressConstructor;
 
     @PostMapping(value = "/person")
     public ResponseEntity<Object> createPerson(@RequestBody Person person) {
@@ -38,7 +36,7 @@ public class PersonController {
             logger.info("Person already exist");
             return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), "Person already exist"), HttpStatus.CONFLICT);
         }
-        logger.info("New Person " + person.toString() + " has been created");
+        logger.info("New Person " + person + " has been created");
         return new ResponseEntity<>(personService.addPerson(person), HttpStatus.CREATED);
     }
 
@@ -75,13 +73,6 @@ public class PersonController {
         return personService.findAll();
     }
 
-    @GetMapping(value = "/persons/{firstName}")
-    public List<Person> returnOnePerson(@PathVariable String firstName) {
-        firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
-        logger.info("Ask GET one person with firstName = " + firstName);
-        logger.info("Response : " + personService.findByFirstName(firstName));
-        return personService.findByFirstName(firstName);
-    }
 
     @GetMapping(value = "communityEmail", produces = "application/json")
     public ResponseEntity<List<String>> getCommunityEmail(@RequestParam(value = "city") String city) {
@@ -106,7 +97,7 @@ public class PersonController {
         MappingJacksonValue personInfoFiters = new MappingJacksonValue(personByAddress);
         personInfoFiters.setFilters(filters);
 
-        if (personByAddress.toString().isEmpty()) {
+        if (personByAddress.getPersonInfoList() == null) {
             return new ResponseEntity<>(personInfoFiters, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(personInfoFiters, HttpStatus.OK);
@@ -117,10 +108,10 @@ public class PersonController {
     @GetMapping(value = "/childAlert", produces = "application/json")
     public ResponseEntity <ChildrenByAddressConstructor> getChildrenByAddress(@RequestParam(value = "address") String address) {
         logger.info("Ask Get childAlert?address=" + address);
-        childrenByAddressConstructor = personService.findChildrenByAddress(address);
+        ChildrenByAddressConstructor childrenByAddressConstructor = personService.findChildrenByAddress(address);
         logger.info("Response : " + childrenByAddressConstructor);
 
-        if (childrenByAddressConstructor.toString().isEmpty()) {
+        if (childrenByAddressConstructor.getChildrenByAddressList() == null) {
             return new ResponseEntity<>(childrenByAddressConstructor, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(childrenByAddressConstructor, HttpStatus.OK);
