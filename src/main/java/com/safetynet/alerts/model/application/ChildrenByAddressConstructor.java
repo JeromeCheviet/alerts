@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Class which groups a list of all children person and a list of all adult person living at the same address in an object.
+ */
 @Component
 public class ChildrenByAddressConstructor {
 

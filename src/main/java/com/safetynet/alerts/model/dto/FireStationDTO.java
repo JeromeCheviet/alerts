@@ -4,7 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-//TODO JavaDoc
+/**
+ * Class to transform fire station's information to object.
+ * <p>
+ * The information comes from FireStationRepository class.
+ */
 @Component
 public class FireStationDTO {
 

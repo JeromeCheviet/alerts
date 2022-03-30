@@ -15,7 +15,6 @@ import org.springframework.util.FileCopyUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-//TODO Tests and cleaning
 /**
  * Class to load Json Data from file
  */
@@ -36,6 +35,13 @@ public class LoadData implements CommandLineRunner {
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
 
+    /**
+     * Read Json file.
+     * The file must be to locate in folder <i>src/main/resources</i> and name <b>data.json</b>
+     *
+     * @throws IOException             error is logged.
+     * @throws JsonProcessingException error is logged.
+     */
     public void readJson() {
         logger.debug("LoadData readJson");
 
@@ -77,6 +83,9 @@ public class LoadData implements CommandLineRunner {
 
     }
 
+    /**
+     * Overriding the main methode to launch application and run <i>readJson</i> method.
+     */
     @Override
     public void run(String... args) throws Exception {
         readJson();

@@ -1,11 +1,11 @@
 package com.safetynet.alerts.service;
 
 import com.safetynet.alerts.manager.PersonMapper;
+import com.safetynet.alerts.model.application.*;
+import com.safetynet.alerts.model.core.Person;
 import com.safetynet.alerts.model.dto.FireStationDTO;
 import com.safetynet.alerts.model.dto.MedicalRecordDTO;
 import com.safetynet.alerts.model.dto.PersonDTO;
-import com.safetynet.alerts.model.application.*;
-import com.safetynet.alerts.model.core.Person;
 import com.safetynet.alerts.repository.FireStationRepository;
 import com.safetynet.alerts.repository.MedicalRecordRepository;
 import com.safetynet.alerts.repository.PersonRepository;
@@ -17,6 +17,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that handles all operations related to person.
+ */
 @Repository
 public class PersonServiceImpl implements PersonService {
 
@@ -33,19 +36,26 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private CalculateDate calculateDate;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean personExist(Person person) {
         logger.debug("PersonService personExist");
         logger.debug("person : " + person);
 
         for (PersonDTO personDTO : personRepository.getPersonList()) {
-            if (personDTO.getFirstName().equals(person.getFirstName()) && personDTO.getLastName().equals(person.getLastName())) {
+            if (personDTO.getFirstName().equals(person.getFirstName()) &&
+                    personDTO.getLastName().equals(person.getLastName())) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Person> findAll() {
         logger.debug("PersonService findAll");
@@ -55,6 +65,9 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.mapDtoToDomainPersonList(personRepository.getPersonList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Person> findByFirstName(String firstName) {
         logger.debug("PersonService findByFirstName");
@@ -75,6 +88,9 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.mapDtoToDomainPersonList(personDTOList);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Person> findByAddress(String address) {
         List<PersonDTO> personDTOList = new ArrayList<>();
@@ -94,6 +110,9 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.mapDtoToDomainPersonList(personDTOList);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> findEmailByCity(String city) {
         logger.debug("PersonService findEmailByCity");
@@ -111,6 +130,9 @@ public class PersonServiceImpl implements PersonService {
         return emailList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PersonByAddress findPersonByAddress(String address) {
         logger.debug("PersonService findPersonByAddress");
@@ -136,7 +158,16 @@ public class PersonServiceImpl implements PersonService {
                 logger.debug("medications : " + medications);
                 logger.debug("allergies : " + allergies);
 
-                personInfoList.add(new PersonInfo(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAddress(), personDTO.getCity(), personDTO.getZip(), age, personDTO.getEmail(), personDTO.getPhone(), medications, allergies));
+                personInfoList.add(new PersonInfo(personDTO.getFirstName(),
+                        personDTO.getLastName(),
+                        personDTO.getAddress(),
+                        personDTO.getCity(),
+                        personDTO.getZip(),
+                        age,
+                        personDTO.getEmail(),
+                        personDTO.getPhone(),
+                        medications,
+                        allergies));
             }
         }
         for (FireStationDTO fireStationDTO : fireStationRepository.getFireStationList()) {
@@ -149,6 +180,9 @@ public class PersonServiceImpl implements PersonService {
         return new PersonByAddress(personInfoList, fireStationNumber);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ChildrenByAddressConstructor findChildrenByAddress(String address) {
         logger.debug("PersonService findChildrenByAddress");
@@ -163,13 +197,14 @@ public class PersonServiceImpl implements PersonService {
                     if (medicalRecordDTO.getFirstName().equals(personDTO.getFirstName())) {
                         if (!calculateDate.isAdult(medicalRecordDTO.getBirthdate())) {
                             age = calculateDate.calculateAge(medicalRecordDTO.getBirthdate());
-                            childrenByAddressList.add(new ChildrenByAddress(personDTO.getFirstName(), personDTO.getLastName(), age));
+                            childrenByAddressList.add(new ChildrenByAddress(personDTO.getFirstName(),
+                                    personDTO.getLastName(),
+                                    age));
                         } else {
                             adultByAddressList.add(new AdultByAddress(personDTO.getFirstName(), personDTO.getLastName()));
                         }
                     }
                 }
-
             }
         }
         logger.debug("childrenByAddressList" + childrenByAddressList);
@@ -181,6 +216,9 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<PersonInfo> findPersonInfo(String firstName, String lastName) {
         logger.debug("PersonService PersonInfo");
@@ -205,7 +243,16 @@ public class PersonServiceImpl implements PersonService {
                         }
                     }
                 }
-                personInfoList.add(new PersonInfo(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAddress(), personDTO.getCity(), personDTO.getZip(), age, personDTO.getEmail(), personDTO.getPhone(), medications, allergies));
+                personInfoList.add(new PersonInfo(personDTO.getFirstName(),
+                        personDTO.getLastName(),
+                        personDTO.getAddress(),
+                        personDTO.getCity(),
+                        personDTO.getZip(),
+                        age,
+                        personDTO.getEmail(),
+                        personDTO.getPhone(),
+                        medications,
+                        allergies));
             }
         }
         logger.debug("personInfoList : " + personInfoList);
@@ -213,6 +260,9 @@ public class PersonServiceImpl implements PersonService {
         return personInfoList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Person> addPerson(Person person) {
         logger.debug("PersonService addPerson");
@@ -222,6 +272,9 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.mapDtoToDomainPersonList(personRepository.getPersonList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deletePerson(String firstName, String lastName) {
         logger.debug("PersonService deletePerson");
@@ -237,13 +290,17 @@ public class PersonServiceImpl implements PersonService {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Person> updatePerson(Person person) {
         logger.debug("PersonService updatePerson");
         logger.debug("person : " + person.toString());
 
         for (PersonDTO personDTO : personRepository.getPersonList()) {
-            if (personDTO.getFirstName().equals(person.getFirstName()) & personDTO.getLastName().equals(person.getLastName())) {
+            if (personDTO.getFirstName().equals(person.getFirstName()) &&
+                    personDTO.getLastName().equals(person.getLastName())) {
                 personDTO.setAddress(person.getAddress());
                 personDTO.setCity(person.getAddress());
                 personDTO.setZip(person.getZip());

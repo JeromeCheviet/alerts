@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Class grouping medical record APIs.
+ */
 @RestController
 public class MedicalRecordController {
 
@@ -22,6 +25,12 @@ public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;
 
+    /**
+     * POST-like API for creating a fire station.
+     *
+     * @param medicalRecord <b>MedicalRecord</b> : object to create.
+     * @return the list àf all medical records.
+     */
     @PostMapping(value = "/medicalRecord")
     public ResponseEntity<Object> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
         logger.info("POST new Medical Record : " + medicalRecord.toString());
@@ -34,6 +43,12 @@ public class MedicalRecordController {
         return new ResponseEntity<>(medicalRecordService.addMedicalRecord(medicalRecord), HttpStatus.CREATED);
     }
 
+    /**
+     * PUT-like API for updating a medical record.
+     *
+     * @param medicalRecord <b>MedicalRecord</b> : object to update.
+     * @return the list off all medical records.
+     */
     @PutMapping(value = "/medicalRecord")
     public ResponseEntity<Object> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
         logger.info("PUT update Medical Record : " + medicalRecord);
@@ -46,6 +61,13 @@ public class MedicalRecordController {
         return new ResponseEntity<>(medicalRecordService.updateMedicalRecord(medicalRecord), HttpStatus.OK);
     }
 
+    /**
+     * DELETE-like API for deleting a medical record
+     *
+     * @param firstName <b>String</b>
+     * @param lastName  <b>String</b>
+     * @return the HTTP status code of the request result.
+     */
     @DeleteMapping(value = "/medicalRecord")
     public ResponseEntity<CustomMessage> deleteMedicalRecord(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
         logger.info("DELETE medical record for firstName : " + firstName + " and lastName : " + lastName);
@@ -60,6 +82,11 @@ public class MedicalRecordController {
         return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), firstName + " " + lastName + "'s medical record has not been deleted"), HttpStatus.CONFLICT);
     }
 
+    /**
+     * GET-like API to have all medical records
+     *
+     * @return all the medical records in a list.
+     */
     @GetMapping("/medicalrecords")
     public List<MedicalRecordDTO> listMedicalRecords() {
         logger.info("Ask GET medicalrecords");

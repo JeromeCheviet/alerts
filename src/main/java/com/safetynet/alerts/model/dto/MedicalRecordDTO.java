@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 
-//TODO JavaDoc
+/**
+ * Class to transform medical record's information to object.
+ * <p>
+ * The information comes from MedicalRecordRepository class.
+ */
 @Component
 public class MedicalRecordDTO {
 

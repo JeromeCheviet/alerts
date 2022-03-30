@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-
+/**
+ * Class which groups a list of all the person living at the same address in an object.
+ */
 public class AddressByFireStation {
 
     private static final Logger logger = LogManager.getLogger(AddressByFireStation.class);

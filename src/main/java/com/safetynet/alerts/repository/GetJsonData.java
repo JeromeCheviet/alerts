@@ -2,8 +2,14 @@ package com.safetynet.alerts.repository;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-//TODO JavaDoc
+/**
+ * Interface linked to the repositories classes.
+ */
 public interface GetJsonData {
-
-    public void setModel(JsonNode node);
+    /**
+     * Set Json node into model
+     *
+     * @param node - JsonNode send by LoadData.readJson() method.
+     */
+    void setModel(JsonNode node);
 }

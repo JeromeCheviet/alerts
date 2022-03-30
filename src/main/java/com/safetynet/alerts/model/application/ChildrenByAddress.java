@@ -2,9 +2,10 @@ package com.safetynet.alerts.model.application;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 
-
+/**
+ * Class which put first name last name and age of one children person in an object.
+ */
 public class ChildrenByAddress {
 
     private static final Logger logger = LogManager.getLogger(ChildrenByAddress.class);

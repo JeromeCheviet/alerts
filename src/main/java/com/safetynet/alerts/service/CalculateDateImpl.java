@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.Period;
 
+/**
+ * Class that manages the operations related to the calculation of the age.
+ */
 @Component
 public class CalculateDateImpl implements CalculateDate {
 
@@ -14,6 +17,9 @@ public class CalculateDateImpl implements CalculateDate {
 
     private LocalDate today = LocalDate.now();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAdult(LocalDate birthdate) {
         logger.debug("CalculateDate isAdult");
@@ -26,8 +32,10 @@ public class CalculateDateImpl implements CalculateDate {
         }
         return false;
     }
-        
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int calculateAge(LocalDate birthdate) {
         logger.debug("CalculateDate calculateAge");

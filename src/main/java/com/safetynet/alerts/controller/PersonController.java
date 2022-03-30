@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Class grouping person APIs.
+ */
 @RestController
 public class PersonController {
 
@@ -28,6 +31,12 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    /**
+     * POST-like API for creating a person.
+     *
+     * @param person <b>Person</b> : object to create.
+     * @return the list of all persons.
+     */
     @PostMapping(value = "/person")
     public ResponseEntity<Object> createPerson(@RequestBody Person person) {
         logger.info("POST new Person : " + person.toString());
@@ -40,6 +49,12 @@ public class PersonController {
         return new ResponseEntity<>(personService.addPerson(person), HttpStatus.CREATED);
     }
 
+    /**
+     * PUT-like API for updating a person.
+     *
+     * @param person <b>Person</b> : person to update.
+     * @return the list of all persons.
+     */
     @PutMapping(value = "/person")
     public ResponseEntity<Object> updatePerson(@RequestBody Person person) {
         logger.info("PUT update person : " + person.toString());
@@ -52,6 +67,13 @@ public class PersonController {
         return new ResponseEntity<>(personService.updatePerson(person), HttpStatus.OK);
     }
 
+    /**
+     * DELETE-like API for deleting a person.
+     *
+     * @param firstName <b>String</b>
+     * @param lastName  <b>String</b>
+     * @return the HTTP status code of the request result.
+     */
     @DeleteMapping(value = "/person")
     public ResponseEntity<CustomMessage> deletePerson(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
         logger.info("DELETE person with firstName : " + firstName + " and lastName : " + lastName);
@@ -60,12 +82,17 @@ public class PersonController {
         logger.debug("isDeleted : " + isDeleted);
         if (isDeleted) {
             logger.info(firstName + " " + lastName + " has been deleted");
-            return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.OK.value(),  firstName + " " + lastName + " has been deleted"), HttpStatus.OK);
+            return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.OK.value(), firstName + " " + lastName + " has been deleted"), HttpStatus.OK);
         }
         logger.info(firstName + " " + lastName + " has not been deleted");
         return new ResponseEntity<>(new CustomMessage(LocalDateTime.now(), HttpStatus.CONFLICT.value(), "Person not delete"), HttpStatus.CONFLICT);
     }
 
+    /**
+     * GET-like API to have all persons
+     *
+     * @return all persons in a list.
+     */
     @GetMapping("/persons")
     public List<Person> listPersons() {
         logger.info("Ask Get persons");
@@ -74,6 +101,12 @@ public class PersonController {
     }
 
 
+    /**
+     * GET-like API to have email from all person living in the city.
+     *
+     * @param city <b>String</b> : The city name.
+     * @return a list of all email from person livieng in the city.
+     */
     @GetMapping(value = "communityEmail", produces = "application/json")
     public ResponseEntity<List<String>> getCommunityEmail(@RequestParam(value = "city") String city) {
         logger.info("Ask Get all email from person to live in city : " + city);
@@ -86,6 +119,12 @@ public class PersonController {
         }
     }
 
+    /**
+     * GET-like API to have the first name, last name, phone number, age, medications and allergies for each people living at the same address and the number of the fire station number that it must appear.
+     *
+     * @param address <b>String</b>
+     * @return the list of person living at this address and the fire station number which cover it.
+     */
     @GetMapping("/fire")
     public ResponseEntity<MappingJacksonValue> getPersonByAddress(@RequestParam(value = "address") String address) {
         logger.info("Ask Get fire?address=" + address);
@@ -105,8 +144,14 @@ public class PersonController {
 
     }
 
+    /**
+     * GET-like API to have the first name, last name and age living at the same address, and the first name and last name from each adult living with them.
+     *
+     * @param address <b>String</b>.
+     * @return the list of all person having 18 years old or younger living at the same address.
+     */
     @GetMapping(value = "/childAlert", produces = "application/json")
-    public ResponseEntity <ChildrenByAddressConstructor> getChildrenByAddress(@RequestParam(value = "address") String address) {
+    public ResponseEntity<ChildrenByAddressConstructor> getChildrenByAddress(@RequestParam(value = "address") String address) {
         logger.info("Ask Get childAlert?address=" + address);
         ChildrenByAddressConstructor childrenByAddressConstructor = personService.findChildrenByAddress(address);
         logger.info("Response : " + childrenByAddressConstructor);
@@ -119,6 +164,13 @@ public class PersonController {
 
     }
 
+    /**
+     * GET-like API to have the first name, last name, address, age, email, medications and allergies from a specific person.
+     *
+     * @param firstName <b>String</b>
+     * @param lastName  <b>String</b>
+     * @return The list of all people with the first name and last name requested.
+     */
     @GetMapping("/personInfo")
     public ResponseEntity<MappingJacksonValue> getPersonInfo(@RequestParam(value = "firstName") String firstName, @RequestParam(value = "lastName") String lastName) {
         logger.info("Ask Get personInfo?firstName=" + firstName + "&lastName=" + lastName);

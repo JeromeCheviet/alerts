@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO Tests and JavaDoc
+/**
+ * Class to serializing the persons in DTO model object.
+ */
 @Repository
 public class PersonRepository implements GetJsonData {
 
@@ -29,6 +31,12 @@ public class PersonRepository implements GetJsonData {
     @Autowired
     private PersonDTO personDTO;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param persons <b>JsonNode</b> : Persons information.
+     * @throws NullPointerException The application is exited.
+     */
     @Override
     public void setModel(JsonNode persons) {
         logger.debug("PersonRepository setModel");
@@ -57,12 +65,23 @@ public class PersonRepository implements GetJsonData {
         logger.debug(personDTOList);
     }
 
+    /**
+     * Get all persons in a list
+     *
+     * @return The list of PersonDTO objects.
+     */
     public List<PersonDTO> getPersonList() {
         logger.debug("PersonRepository getPersonList");
         logger.debug("return " + personDTOList);
+
         return personDTOList;
     }
 
+    /**
+     * Add new person.
+     *
+     * @param personDTO <b>PersonDTO</b> : person to add.
+     */
     public void addPerson(PersonDTO personDTO) {
         logger.debug("PersonRepository addPerson");
         logger.debug("personDTO : " + personDTO.toString());
@@ -70,6 +89,11 @@ public class PersonRepository implements GetJsonData {
         personDTOList.add(personDTO);
     }
 
+    /**
+     * Delete a person
+     *
+     * @param personDTO <b>PersonDTO</b> : person to delete.
+     */
     public void deletePerson(PersonDTO personDTO) {
         logger.debug("PersonRepository deletePerson");
         logger.debug("PersonDTO : " + personDTO.toString());
