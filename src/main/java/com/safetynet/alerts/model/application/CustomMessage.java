@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class which construct a custom message in an object.
+ */
 @Component
 public class CustomMessage {
 

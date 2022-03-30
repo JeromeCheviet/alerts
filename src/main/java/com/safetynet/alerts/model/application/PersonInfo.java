@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Class which groups all information about a person in an object.
+ */
 @JsonFilter("personInfoFilter")
 @Component
 public class PersonInfo {

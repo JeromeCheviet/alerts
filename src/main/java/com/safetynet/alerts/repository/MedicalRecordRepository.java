@@ -12,8 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO Tests and JavaDoc
-
+/**
+ * Class to serializing the medical records in DTO model object.
+ */
 @Repository
 public class MedicalRecordRepository implements GetJsonData {
 
@@ -30,6 +31,12 @@ public class MedicalRecordRepository implements GetJsonData {
     @Autowired
     private MedicalRecordDTO medicalRecordDTO;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param medicalRecords <b>JsonNode</b> : Medical Records information.
+     * @throws NullPointerException The application is exited.
+     */
     @Override
     public void setModel(JsonNode medicalRecords) {
         logger.debug("MedicalRecordsRepository setModel");
@@ -56,7 +63,6 @@ public class MedicalRecordRepository implements GetJsonData {
                     }
 
 
-
                     medicalRecordDTOList.add(new MedicalRecordDTO(firstName, lastName, birthdate, medications, allergies));
                 }
             }
@@ -67,12 +73,23 @@ public class MedicalRecordRepository implements GetJsonData {
         logger.debug(medicalRecordDTOList);
     }
 
+    /**
+     * Get all medical records in a list.
+     *
+     * @return The list of all MedicalRecordDTO objects.
+     */
     public List<MedicalRecordDTO> getMedicalRecordList() {
         logger.debug("MedicalRecordRepository getMedicalRecordList");
         logger.debug("return " + medicalRecordDTOList);
+
         return medicalRecordDTOList;
     }
 
+    /**
+     * Add a new medical record.
+     *
+     * @param medicalRecordDTO <b>MedicalRecordDTO</b> : medical record to add.
+     */
     public void addMedicalRecord(MedicalRecordDTO medicalRecordDTO) {
         logger.debug("MedicalRecordRepository addMedicalRecord");
         logger.debug("medicalRecordDTO : " + medicalRecordDTO.toString());
@@ -80,9 +97,14 @@ public class MedicalRecordRepository implements GetJsonData {
         medicalRecordDTOList.add(medicalRecordDTO);
     }
 
+    /**
+     * Delete a medical record.
+     *
+     * @param medicalRecordDTO <b>MedicalRecordDTO</b> : medical record to delete.
+     */
     public void deleteMedicalRecord(MedicalRecordDTO medicalRecordDTO) {
         logger.debug("MedicalRecordRepository deleteMecicalRecord");
-        logger.debug("medicalRecordDTO : " + medicalRecordDTO );
+        logger.debug("medicalRecordDTO : " + medicalRecordDTO);
 
         medicalRecordDTOList.remove(medicalRecordDTO);
     }

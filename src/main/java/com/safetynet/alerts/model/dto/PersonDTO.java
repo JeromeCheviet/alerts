@@ -5,7 +5,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-//TODO JavaDoc
+/**
+ * Class to transform person's information to object.
+ * <p>
+ * The information comes from PersonRepository class.
+ */
 @Component
 public class PersonDTO {
 

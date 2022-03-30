@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-
+/**
+ * Class which groups a list person and the number of adults and children it contains in an object.
+ */
 public class PersonByFireStation {
 
     private static final Logger logger = LogManager.getLogger(PersonByFireStation.class);

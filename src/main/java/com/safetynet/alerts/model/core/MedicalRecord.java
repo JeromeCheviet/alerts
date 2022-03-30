@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Class used to manipulate this medical record object instead of medical record DTO object.
+ * <p>
+ * The objects are sent by MedicalRecordMapper class.
+ */
 @Component
 public class MedicalRecord {
 

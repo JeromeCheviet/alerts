@@ -21,6 +21,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that handles all operations related to fire stations.
+ */
 @Repository
 public class FireStationServiceImpl implements FireStationService {
 
@@ -44,6 +47,9 @@ public class FireStationServiceImpl implements FireStationService {
     @Autowired
     private FireStationMapper fireStationMapper;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addressExist(FireStation fireStation) {
         logger.debug("FireStationService addressExist");
@@ -60,6 +66,9 @@ public class FireStationServiceImpl implements FireStationService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<FireStationDTO> findAll() {
         logger.debug("FireStationService findAll");
@@ -69,6 +78,9 @@ public class FireStationServiceImpl implements FireStationService {
         return fireStationRepository.getFireStationList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PersonByFireStation findPersonCoverageByFireStation(int stationNumber) {
         logger.debug("FireStationService findPersonCoverageByFireStation");
@@ -104,7 +116,16 @@ public class FireStationServiceImpl implements FireStationService {
 
                     age = calculateDate.calculateAge(birthdate);
 
-                    personInfoList.add(new PersonInfo(person.getFirstName(), person.getLastName(), person.getAddress(), person.getCity(), person.getZip(), age, person.getEmail(), person.getPhone(), medications, allergies));
+                    personInfoList.add(new PersonInfo(person.getFirstName(),
+                            person.getLastName(),
+                            person.getAddress(),
+                            person.getCity(),
+                            person.getZip(),
+                            age,
+                            person.getEmail(),
+                            person.getPhone(),
+                            medications,
+                            allergies));
 
                     if (calculateDate.isAdult(birthdate)) {
                         numberAdults++;
@@ -120,6 +141,9 @@ public class FireStationServiceImpl implements FireStationService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> findPhoneNumberByFireStation(int stationNumber) {
         logger.debug("FireStationService findPhoneNumberByFireStation");
@@ -140,6 +164,9 @@ public class FireStationServiceImpl implements FireStationService {
         return phoneNumberList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<AddressByFireStation> findAddressByFireStation(List<Integer> stations) {
         logger.debug(("FireStationService findAddressByFireStation"));
@@ -166,7 +193,16 @@ public class FireStationServiceImpl implements FireStationService {
                             }
                             logger.debug("medications : " + medications);
                             logger.debug("allergies : " + allergies);
-                            personInfosList.add(new PersonInfo(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getAddress(), personDTO.getCity(), personDTO.getZip(), age, personDTO.getEmail(), personDTO.getPhone(), medications, allergies));
+                            personInfosList.add(new PersonInfo(personDTO.getFirstName(),
+                                    personDTO.getLastName(),
+                                    personDTO.getAddress(),
+                                    personDTO.getCity(),
+                                    personDTO.getZip(),
+                                    age,
+                                    personDTO.getEmail(),
+                                    personDTO.getPhone(),
+                                    medications,
+                                    allergies));
                             logger.debug("personInfosList : " + personInfosList);
                         }
                     }
@@ -178,6 +214,9 @@ public class FireStationServiceImpl implements FireStationService {
         return addressByFireStationList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<FireStation> addFireStation(FireStation fireStation) {
         logger.debug("FireStationService addFireStation");
@@ -187,6 +226,9 @@ public class FireStationServiceImpl implements FireStationService {
         return fireStationMapper.mapDtoToDomainFireStationList(fireStationRepository.getFireStationList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int deleteFireStation(String address, Integer stationNumber) {
         logger.debug("FireStationService deleteMappingFireStationNumber");
@@ -207,6 +249,9 @@ public class FireStationServiceImpl implements FireStationService {
         return 9999;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<FireStation> updateFireStation(FireStation fireStation) {
         logger.debug("FireStationService updateFireStation");

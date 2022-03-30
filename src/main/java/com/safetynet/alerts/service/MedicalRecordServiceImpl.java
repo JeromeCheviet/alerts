@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that handles all operations related to medical records.
+ */
 @Repository
 public class MedicalRecordServiceImpl implements MedicalRecordService {
 
@@ -23,20 +26,26 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Autowired
     private MedicalRecordMapper medicalRecordMapper;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean medicalRecordExist(MedicalRecord medicalRecord) {
         logger.debug("MedicalRecordService medicalRecordExist");
         logger.debug("medicalRecord : " + medicalRecord);
 
         for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
-            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) && medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
+            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) &&
+                    medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
                 return true;
             }
         }
         return false;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MedicalRecordDTO> findAll() {
         logger.debug("MedicalRecordService findAll");
@@ -46,6 +55,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         return medicalRecordRepository.getMedicalRecordList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MedicalRecordDTO> findByFirstName(String firstName) {
         logger.debug("MedicalRecord findByFirstName");
@@ -65,6 +77,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         return medicalRecordDTOList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MedicalRecord> addMedicalRecord(MedicalRecord medicalRecord) {
         logger.debug("MedicalRecordService addMedicalRecord");
@@ -74,13 +89,17 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         return medicalRecordMapper.mapToDomainMedicalRecordList(medicalRecordRepository.getMedicalRecordList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<MedicalRecord> updateMedicalRecord(MedicalRecord medicalRecord) {
         logger.debug("MedicalRecordService updateMedicalRecord");
         logger.debug("medicalRecord : " + medicalRecord.toString());
 
         for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
-            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) & medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
+            if (medicalRecordDTO.getFirstName().equals(medicalRecord.getFirstName()) &&
+                    medicalRecordDTO.getLastName().equals(medicalRecord.getLastName())) {
                 medicalRecordDTO.setBirthdate(medicalRecord.getBirthdate());
                 medicalRecordDTO.setMedications(medicalRecord.getMedications());
                 medicalRecordDTO.setAllergies(medicalRecord.getAllergies());
@@ -89,6 +108,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         return medicalRecordMapper.mapToDomainMedicalRecordList(medicalRecordRepository.getMedicalRecordList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteMedicalRecord(String firstName, String lastName) {
         logger.debug("MedicalRecordService deleteMedicalRecord");

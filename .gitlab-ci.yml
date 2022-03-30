@@ -1,17 +1,36 @@
-image: maven:3.8.4-openjdk-11-slim
+stages:
+  - package
+  - test
+  # - docker
+  # - deploy
 
-variables:
-  MAVEN_CLI_OPTS: "--batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.repository/"
-
-cache:
-  key: maven
-  paths: [.repository/]
-
-test_job:
-  stage: test
+.maven:
+  image: maven:3.8.4-openjdk-11-slim
+  cache:
+    key: maven-$CI_COMMIT_REF_SLUG
+    paths:
+      - .m2
+    policy: pull-push
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository/ -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Djansi.force=true"
+    MAVEN_CLI_OPTS: "--errors --show-version -Dstyle.color=always"
+  
+maven-package:
+  stage: package
+  extends: .maven
   script:
-    - mvn $MAVEN_CLI_OPTS clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report
+    - mvn $MAVEN_CLI_OPTS package -DskipTests
+    - rm -rf target/*.original
   artifacts:
     paths:
-      - target/site/jacoco/jacoco.xml
+      - target/
+    expire_in: 7 days
+
+maven-verify:
+  stage: test
+  extends: .maven
+  dependencies: [maven-package]
+  script:
+    - mvn $MAVEN_CLI_OPTS verify -Dmaven.main.skip org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JeromeCheviet_alerts -Dsonar.organization=jeromecheviet -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=f1db58f52a3c6db45dd3b9ef24dc0f80c6daee35
+    - awk -F"," '{ lines += $8 + $9; covered += $9 } END { print covered, "/", lines, "lines covered"; print 100*covered/lines, "% covered" }' target/site/jacoco/jacoco.csv || echo "0.0 % covered"
+  coverage: '/\d+.*\d+ \% covered/'

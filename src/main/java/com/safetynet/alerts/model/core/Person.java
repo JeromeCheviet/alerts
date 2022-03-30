@@ -5,6 +5,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class used to manipulate this person object instead of person DTO object.
+ * <p>
+ * The objects are sent by PersonMapper class.
+ */
 @Component
 public class Person {
 

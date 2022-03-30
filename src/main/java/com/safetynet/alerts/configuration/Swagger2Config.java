@@ -13,6 +13,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Swagger configuration
+ */
 @Configuration
 public class Swagger2Config {
     @Bean

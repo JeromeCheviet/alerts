@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Class which groups a list of all person depend on the same station in an object.
+ */
 public class PersonByAddress {
 
     private static final Logger logger = LogManager.getLogger(PersonByAddress.class);
