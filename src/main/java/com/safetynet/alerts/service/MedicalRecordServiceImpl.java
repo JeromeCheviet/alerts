@@ -117,7 +117,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         logger.debug("firstName : " + firstName + " | lastName : " + lastName);
 
         for (MedicalRecordDTO medicalRecordDTO : medicalRecordRepository.getMedicalRecordList()) {
-            if (medicalRecordDTO.getFirstName().equals(firstName) & medicalRecordDTO.getLastName().equals(lastName)) {
+            if (medicalRecordDTO.getFirstName().equals(firstName) && medicalRecordDTO.getLastName().equals(lastName)) {
                 logger.debug("medicalRecordDTO : " + medicalRecordDTO.toString());
                 medicalRecordRepository.deleteMedicalRecord(medicalRecordDTO);
                 return true;

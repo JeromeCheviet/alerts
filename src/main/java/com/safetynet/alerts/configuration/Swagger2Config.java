@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Swagger configuration
+ * Swagger configuration to fix launch spring bug.
  */
 @Configuration
 public class Swagger2Config {
